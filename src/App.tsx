@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import type { Todo } from './types/todo'
+import { Filter } from './types/filter'
 import { TodoInput } from './components/TodaInput'
 import { TodoList } from './components/TodoList'
+import { FilterBar } from './components/FilterBar'
 
 export default function App() {
   const [todos, setTodos] = useState<Todo[]>(() => {
@@ -10,6 +12,13 @@ export default function App() {
   })
 
   const [value, setValue] = useState('')
+  const [filter, setFilter] = useState<Filter>(Filter.ALL)
+
+  const filteredTodos = todos.filter(todo => {
+    if (filter === Filter.ACTIVE) return !todo.completed
+    if (filter === Filter.COMPLETED) return todo.completed
+    return true
+  })
 
   const addTodo = () => {
     if (!value.trim()) return
@@ -33,9 +42,13 @@ export default function App() {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white w-full max-w-md p-6 rounded-xl shadow">
         <h1 className="text-2xl font-semibold mb-4 text-center">To‑Do List</h1>
+        <FilterBar
+          value={filter}
+          onChange={setFilter}
+        />
 
         <TodoInput value={value} onChange={setValue} onAdd={addTodo} />
-        <TodoList todos={todos} onToggle={toggleTodo} onRemove={removeTodo} />
+        <TodoList todos={filteredTodos} onToggle={toggleTodo} onRemove={removeTodo} />
       </div>
     </div>
   )
