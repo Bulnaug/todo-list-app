@@ -1,6 +1,11 @@
-# ✅ Todo List
+# 📝 To-Do List
 
 Minimalistische ToDo App
+
+---
+
+## 🚀 Demo
+https://todo-list-app-psi-bice.vercel.app/
 
 ---
 
@@ -9,6 +14,8 @@ Minimalistische ToDo App
 - 🔍 ToDo einfugen
 - ✖️ Todo loschen
 - ☑️ Todo absolviert
+- 📊 Todo's nach Status filtrieren
+- 🌗 Dark Mode
 
 ---
 
