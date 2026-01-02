@@ -35,6 +35,8 @@ export default function App() {
     return true
   })
 
+  
+
   const addTodo = () => {
     if (!value.trim()) return
     setTodos([...todos, { id: Date.now(), text: value, completed: false }])
@@ -55,6 +57,22 @@ export default function App() {
 
   const activeCount = todos.filter(todo => !todo.completed).length
 
+  const TaskCount = () => {
+    if (todos.length === 0) {
+      return (
+        <p className="text-center text-gray-400 dark:text-gray-500 mt-6">
+          No Tasks ✨
+        </p>
+      )
+    } else {
+      return (
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
+          Tasks left: <span className="font-medium">{activeCount}</span>
+        </p>
+      )
+    }
+  }
+
   return (
     <div className={`min-h-screen flex items-center justify-center ${
         theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-100'
@@ -71,7 +89,7 @@ export default function App() {
       >
         {theme === 'dark' ? '☀️' : '🌙'}
       </button>
-      
+
       <div className="w-full max-w-md
         bg-white dark:bg-gray-800
         text-gray-800 dark:text-gray-100
@@ -89,7 +107,7 @@ export default function App() {
         <hr className="my-4 border-gray-200" />
 
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
-          Tasks left: <span className="font-medium">{activeCount}</span>
+          <TaskCount />
         </p>
 
         <hr className="my-4 border-gray-200" />
