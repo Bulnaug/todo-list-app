@@ -34,7 +34,15 @@ export function TodoItem({ todo, onToggle, onRemove }: Props) {
       </label>
       <button
         onClick={() => onRemove(todo.id)}
-        className="text-gray-400 hover:text-red-500 transition"
+        className="
+          w-6 h-6
+          flex items-center justify-center
+          rounded-full
+          text-gray-400
+          hover:bg-red-100
+          hover:text-red-500
+          transition
+        "
       >
         ✕
       </button>

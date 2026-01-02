@@ -18,7 +18,7 @@ export function TodoList({ todos, onToggle, onRemove }: Props) {
   }
 
   return (
-    <ul className="space-y-2">
+    <ul className="space-y-2 mt-4">
       {todos.map(todo => (
         
         <TodoItem

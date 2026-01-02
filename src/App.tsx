@@ -38,6 +38,8 @@ export default function App() {
     localStorage.setItem('todos', JSON.stringify(todos))
   }, [todos])
 
+  const activeCount = todos.filter(todo => !todo.completed).length
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-6">
@@ -49,6 +51,14 @@ export default function App() {
           value={filter}
           onChange={setFilter}
         />
+
+        <hr className="my-4 border-gray-200" />
+
+        <p className="text-sm text-gray-500 mt-2 text-center">
+          Tasks left: <span className="font-medium">{activeCount}</span>
+        </p>
+
+        <hr className="my-4 border-gray-200" />
 
         <TodoInput value={value} onChange={setValue} onAdd={addTodo} />
         <TodoList todos={filteredTodos} onToggle={toggleTodo} onRemove={removeTodo} />
