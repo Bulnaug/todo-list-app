@@ -17,12 +17,24 @@ export function TodoInput({ value, onChange, onAdd }: Props) {
         value={value}
         onChange={e => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring"
+        className="
+          flex-1 px-3 py-2
+          border border-gray-300
+          rounded-lg
+          focus:outline-none
+          focus:ring-2 focus:ring-blue-500
+        "
         placeholder="New Task"
       />
       <button
         onClick={onAdd}
-        className="bg-black text-white px-4 rounded hover:bg-gray-800"
+        className="
+          px-4 py-2
+          bg-blue-600 text-white
+          rounded-lg
+          hover:bg-blue-700
+          transition
+        "
       >
         +
       </button>

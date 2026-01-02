@@ -12,11 +12,15 @@ export function FilterBar({ value, onChange }: Props) {
         <button
           key={filter}
           onClick={() => onChange(filter)}
-          className={`px-3 py-1 rounded ${
-            value === filter
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200'
-          }`}
+          className={`
+                px-3 py-1 rounded-full text-sm capitalize
+                transition
+                ${
+                value === filter
+                    ? 'bg-blue-600 text-white shadow'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }
+            `}
         >
           {filter}
         </button>
