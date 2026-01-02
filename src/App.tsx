@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { Todo } from './types/todo'
 import { Filter } from './types/filter'
-import { TodoInput } from './components/TodaInput'
+import { TodoInput } from './components/TodoInput'
 import { TodoList } from './components/TodoList'
 import { FilterBar } from './components/FilterBar'
 
@@ -13,6 +13,7 @@ export default function App() {
 
   const [value, setValue] = useState('')
   const [filter, setFilter] = useState<Filter>(Filter.ALL)
+  const [darkMode, setDarkMode] = useState(false)
 
   const filteredTodos = todos.filter(todo => {
     if (filter === Filter.ACTIVE) return !todo.completed
@@ -41,9 +42,27 @@ export default function App() {
   const activeCount = todos.filter(todo => !todo.completed).length
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-6">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+    <div className={`min-h-screen flex items-center justify-center ${
+      darkMode ? 'dark bg-gray-900' : 'bg-gray-100'
+      }`}
+    >
+      <button
+        onClick={() => setDarkMode(prev => !prev)}
+        className="
+          absolute top-4 right-4
+          p-2 rounded-full
+          bg-gray-200 dark:bg-gray-700
+          hover:scale-105 transition
+        "
+      >
+        {darkMode ? '☀️' : '🌙'}
+      </button>
+      <div className="w-full max-w-md
+        bg-white dark:bg-gray-800
+        text-gray-800 dark:text-gray-100
+        rounded-xl shadow-lg p-6"
+      >
+        <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4 text-center">
           📝 To-Do List
         </h1>
 
@@ -54,7 +73,7 @@ export default function App() {
 
         <hr className="my-4 border-gray-200" />
 
-        <p className="text-sm text-gray-500 mt-2 text-center">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
           Tasks left: <span className="font-medium">{activeCount}</span>
         </p>
 

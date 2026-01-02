@@ -17,8 +17,8 @@ export function FilterBar({ value, onChange }: Props) {
                 transition
                 ${
                 value === filter
-                    ? 'bg-blue-600 text-white shadow'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200'
                 }
             `}
         >
