@@ -5,15 +5,29 @@ import { TodoInput } from './components/TodoInput'
 import { TodoList } from './components/TodoList'
 import { FilterBar } from './components/FilterBar'
 
+type Theme = 'light' | 'dark'
+
 export default function App() {
   const [todos, setTodos] = useState<Todo[]>(() => {
     const saved = localStorage.getItem('todos')
     return saved ? JSON.parse(saved) : []
   })
 
+  const [theme, setTheme] = useState<Theme>(() => {
+    const saved = localStorage.getItem('theme') as Theme | null
+    if (saved) return saved
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light'
+  })
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
   const [value, setValue] = useState('')
   const [filter, setFilter] = useState<Filter>(Filter.ALL)
-  const [darkMode, setDarkMode] = useState(false)
 
   const filteredTodos = todos.filter(todo => {
     if (filter === Filter.ACTIVE) return !todo.completed
@@ -43,11 +57,11 @@ export default function App() {
 
   return (
     <div className={`min-h-screen flex items-center justify-center ${
-      darkMode ? 'dark bg-gray-900' : 'bg-gray-100'
+        theme === 'dark' ? 'dark bg-gray-900' : 'bg-gray-100'
       }`}
     >
       <button
-        onClick={() => setDarkMode(prev => !prev)}
+        onClick={() => setTheme(prev => (prev === 'dark' ? 'light' : 'dark'))}
         className="
           absolute top-4 right-4
           p-2 rounded-full
@@ -55,8 +69,9 @@ export default function App() {
           hover:scale-105 transition
         "
       >
-        {darkMode ? '☀️' : '🌙'}
+        {theme === 'dark' ? '☀️' : '🌙'}
       </button>
+      
       <div className="w-full max-w-md
         bg-white dark:bg-gray-800
         text-gray-800 dark:text-gray-100
