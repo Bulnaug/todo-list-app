@@ -1,4 +1,5 @@
 import type { Todo } from '../types/todo'
+import { motion } from 'framer-motion'
 
 interface Props {
   todo: Todo
@@ -8,7 +9,13 @@ interface Props {
 
 export function TodoItem({ todo, onToggle, onRemove }: Props) {
   return (
-    <li className="
+    <motion.li
+      layout
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.2 }}
+      className="
       flex items-center justify-between
       px-3 py-2 rounded-lg
       border border-gray-200 dark:border-gray-700
@@ -45,6 +52,6 @@ export function TodoItem({ todo, onToggle, onRemove }: Props) {
       >
         ✕
       </button>
-    </li>
+    </motion.li>
   )
 }

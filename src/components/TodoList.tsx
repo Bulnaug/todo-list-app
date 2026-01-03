@@ -1,5 +1,6 @@
 import type { Todo } from '../types/todo'
 import { TodoItem } from './TodoItem'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface Props {
   todos: Todo[]
@@ -10,7 +11,11 @@ interface Props {
 export function TodoList({ todos, onToggle, onRemove }: Props) {
 
   return (
-    <ul className="space-y-2 mt-4">
+    <motion.ul
+      layout
+      className="space-y-2 mt-4"
+    >
+      <AnimatePresence>
       {todos.map(todo => (
         
         <TodoItem
@@ -20,6 +25,7 @@ export function TodoList({ todos, onToggle, onRemove }: Props) {
           onRemove={onRemove}
         />
       ))}
-    </ul>
+      </AnimatePresence>
+    </motion.ul>
   )
 }
