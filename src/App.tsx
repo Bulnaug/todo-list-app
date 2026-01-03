@@ -5,14 +5,13 @@ import { TodoInput } from './components/TodoInput'
 import { TodoList } from './components/TodoList'
 import { FilterBar } from './components/FilterBar'
 import { motion } from 'framer-motion'
+import { supabase } from './lib/supabase'
 
 type Theme = 'light' | 'dark'
 
 export default function App() {
-  const [todos, setTodos] = useState<Todo[]>(() => {
-    const saved = localStorage.getItem('todos')
-    return saved ? JSON.parse(saved) : []
-  })
+  const [todos, setTodos] = useState<Todo[]>([])
+  const [text, setText] = useState('')
 
   const [theme, setTheme] = useState<Theme>(() => {
     const saved = localStorage.getItem('theme') as Theme | null
@@ -36,20 +35,63 @@ export default function App() {
     return true
   })
 
-  
+  useEffect(() => {
+    const loadTodos = async () => {
+      const { data, error } = await supabase
+        .from('todos')
+        .select('*')
+        .order('created_at', { ascending: false })
 
-  const addTodo = () => {
-    if (!value.trim()) return
-    setTodos([...todos, { id: Date.now(), text: value, completed: false }])
-    setValue('')
+      if (!error && data) {
+        setTodos(data)
+      }
+    }
+
+    loadTodos()
+  }, [])
+
+  const addTodo = async () => {
+    if (!text.trim()) return
+
+    const { data, error } = await supabase
+      .from('todos')
+      .insert([{ text, completed: false }])
+      .select()
+      .single()
+
+    if (!error && data) {
+      setTodos(prev => [data, ...prev])
+      setText('')
+    }
   }
 
-  const toggleTodo = (id: number) => {
-    setTodos(todos.map(t => (t.id === id ? { ...t, completed: !t.completed } : t)))
+  const toggleTodo = async (id: number) => {
+    const todo = todos.find(t => t.id === id)
+    if (!todo) return
+
+    const { error } = await supabase
+      .from('todos')
+      .update({ completed: !todo.completed })
+      .eq('id', id)
+
+    if (!error) {
+      setTodos(prev =>
+        prev.map(t =>
+          t.id === id ? { ...t, completed: !t.completed } : t
+        )
+      )
+    }
   }
 
-  const removeTodo = (id: number) => {
-    setTodos(todos.filter(t => t.id !== id))
+  const removeTodo = async (id: number) => {
+    const { error } = await supabase
+      .from('todos')
+      .delete()
+      .eq('id', id)
+
+    if (!error) {
+      setTodos(prev => prev.filter(t => t.id !== id))
+    }
   }
 
   useEffect(() => {
@@ -121,7 +163,7 @@ export default function App() {
 
         <hr className="my-4 border-gray-200" />
 
-        <TodoInput value={value} onChange={setValue} onAdd={addTodo} />
+        <TodoInput value={text} onChange={setText} onAdd={addTodo} />
         <TodoList todos={filteredTodos} onToggle={toggleTodo} onRemove={removeTodo} />
       </div>
     </div>

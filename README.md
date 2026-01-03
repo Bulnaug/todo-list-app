@@ -16,6 +16,7 @@ https://todo-list-app-psi-bice.vercel.app/
 - ☑️ Todo absolviert
 - 📊 Todo's nach Status filtrieren
 - 🌗 Dark Mode
+- 🗃️ Todo's sind mit Datenbank verbindet
 
 ---
 
@@ -25,4 +26,6 @@ https://todo-list-app-psi-bice.vercel.app/
 - **TypeScript**
 - **Vite**
 - **Tailwind CSS**
+- **framer-motion**
+- **supabase**
 
