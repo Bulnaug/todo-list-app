@@ -26,7 +26,6 @@ export default function App() {
     localStorage.setItem('theme', theme)
   }, [theme])
 
-  const [value, setValue] = useState('')
   const [filter, setFilter] = useState<Filter>(Filter.ALL)
 
   const filteredTodos = todos.filter(todo => {
