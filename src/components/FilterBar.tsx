@@ -1,4 +1,5 @@
 import { Filter } from '../types/filter'
+import { motion } from 'framer-motion'
 
 type Props = {
   value: Filter
@@ -9,7 +10,9 @@ export function FilterBar({ value, onChange }: Props) {
   return (
     <div className="flex gap-2 mb-4">
       {Object.values(Filter).map(filter => (
-        <button
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.05 }}
           key={filter}
           onClick={() => onChange(filter)}
           className={`
@@ -23,7 +26,7 @@ export function FilterBar({ value, onChange }: Props) {
             `}
         >
           {filter}
-        </button>
+        </motion.button>
       ))}
     </div>
   )

@@ -4,6 +4,7 @@ import { Filter } from './types/filter'
 import { TodoInput } from './components/TodoInput'
 import { TodoList } from './components/TodoList'
 import { FilterBar } from './components/FilterBar'
+import { motion } from 'framer-motion'
 
 type Theme = 'light' | 'dark'
 
@@ -60,15 +61,23 @@ export default function App() {
   const TaskCount = () => {
     if (todos.length === 0) {
       return (
-        <p className="text-center text-gray-400 dark:text-gray-500 mt-6">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center text-gray-400 dark:text-gray-500 mt-6"
+        >
           No Tasks ✨
-        </p>
+        </motion.p>
       )
     } else {
       return (
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center text-gray-400 dark:text-gray-500 mt-6"
+        >
           Tasks left: <span className="font-medium">{activeCount}</span>
-        </p>
+        </motion.p>
       )
     }
   }
